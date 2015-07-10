@@ -1,0 +1,16 @@
+prng = Random.new
+
+num_rows = 20
+num_cols = 5
+alpha = ('a'..'z').to_a
+numeric = ('0'..'9').to_a
+
+col_types = Array.new(num_cols, 'string')
+for i in 0..num_rows
+  for type in col_types
+    if type == 'string'
+      (alpha + numeric).shuffle[0,rand(30)].join
+    elsif type == 'numeric'
+      numeric.shuffle[0,rand(26)].join
+    elsif type == 'financial' 
+    
