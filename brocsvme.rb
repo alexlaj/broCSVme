@@ -8,7 +8,7 @@ require "optparse"
 row = []
 csv_array = []
 col_types = []
-special = [".", "<", ">", "/", ";", "&", "%", "$", "@", "`", "\\"]
+special = [".", "<", ">", "/", "\\", "?", ";", "&", "%", "$", "@", "`", "(", ")", "*"]
 data_types = ["special", "string", "numeric", "financial", "date", "time", "datetime"]
 
 options = {}
