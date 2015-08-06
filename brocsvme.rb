@@ -7,8 +7,9 @@ require "optparse"
 
 row = []
 csv_array = []
-col_types = [] 
-data_types = ["string", "numeric", "financial", "date", "time", "datetime"]
+col_types = []
+special = [".", "<", ">", "/", ";", "&", "%", "$", "@", "`", "\\"]
+data_types = ["special", "string", "numeric", "financial", "date", "time", "datetime"]
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -39,11 +40,11 @@ csv = File.open(output_file, "w" )
 num_rows = options[:rows]
 num_rows ||= 20
 num_cols = options[:columns]
-num_cols ||= 6
+num_cols ||= 7
 
 # Shuffle the column types
 for i in 0..(num_cols-1)
-  col_types << data_types[i%6]
+  col_types << data_types[i%7]
 end
 col_types = col_types.shuffle
 # Use the data type as the column headers
@@ -63,8 +64,8 @@ for i in 1..num_rows
       row << "$" + ("0".."9").to_a.shuffle[0,rand(10)].join +
              "." + ("0".."9").to_a.shuffle[0,rand(6)].join
     elsif type == "date"
-      row << ("1".."31").to_a.shuffle[1] + "/" + 
-             ("1".."12").to_a.shuffle[1] + "/" +
+      row << ("1".."12").to_a.shuffle[1] + "-" +
+             ("1".."31").to_a.shuffle[1] + "-" +
              ("1980".."2050").to_a.shuffle[1]
     elsif type == "time"
       row << ("0".."23").to_a.shuffle[1].rjust(2, '0') + ":" +
@@ -79,6 +80,8 @@ for i in 1..num_rows
              ("0".."59").to_a.shuffle[1].rjust(2, '0') + "-" +
              ("0".."23").to_a.shuffle[1].rjust(2, '0') + ":" +
              ("0".."59").to_a.shuffle[1].rjust(2, '0')
+    elsif type == "special"
+      row << "\"" + special.to_a.shuffle[0,rand(20)].join + "\""
     end
   end
   # Add the string to the file as a row of the csv
