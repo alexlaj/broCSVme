@@ -14,19 +14,19 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = "Use switches to customize the output csv."
 
-  opts.on("-r", "--rows [NUMROWS]", "Number of rows in CSV") do |rows|
+  opts.on("-r", "--rows [NUMROWS]", "Number of rows in CSV.") do |rows|
     options[:rows] = rows.to_i
   end
 
-  opts.on("-c", "--columns [NUMCOLS]", "Number of columns in CSV") do |cols|
+  opts.on("-c", "--columns [NUMCOLS]", "Number of columns in CSV.") do |cols|
     options[:columns] = cols.to_i
   end
 
-  opts.on("-n", "--name [FILENAME]", "File name") do |fname|
+  opts.on("-n", "--name [FILENAME]", "File name.") do |fname|
     options[:filename] = fname
   end
 
-  opts.on("-b", "--baddaata", "Bad data") do |bdata|
+  opts.on("-b", "--baddaata", "Allow bad data.") do |bdata|
     options[:baddata] = bdata
   end
 end
