@@ -58,7 +58,7 @@ second = minute
 
 # Shuffle the column types
 for i in 0..(num_cols-1)
-  col_types << data_types[i%7]
+  col_types << data_types[i%data_types.length]
 end
 col_types = col_types.shuffle
 
