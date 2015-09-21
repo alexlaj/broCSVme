@@ -51,8 +51,9 @@ numeric = [*'0'..'9']
 special = [".", "<", ">", "/", "\\", "?", ";", "&", "%", "$", "@", "`", "(", ")", "*"]
 month = options[:baddaata] ? [*'0'..'30'] : [*'1'..'12']
 day = options[:baddata] ? [*'0'..'50'] : [*'1'..'28']
-year = options[:baddata] ? [*'1000'..'3000'] : [*'1980'..'2050']
+year = options[:baddata] ? [*'1000'..'3000'] : [*'1980'..'2020']
 hour = options[:baddata] ? [*'0'..'50'] : [*'0'..'23']
+utcHour = options[:baddata] ? [*'0'..'50'] : [*'0'..'11']
 minute = options[:baddata] ? [*'0'..'100'] : [*'0'..'59']
 second = minute
 
@@ -84,7 +85,9 @@ for i in 1..num_rows
     elsif type == "time"
       row << hour.sample.rjust(2, '0') + ":" +
         minute.sample.rjust(2, '0') + ":" +
-        second.sample.rjust(2, '0')
+        second.sample.rjust(2, '0') + "-" +
+        utcHour.sample.rjust(2, '0') + ":" +
+        minute.sample.rjust(2, '0')
     elsif type == "datetime"
       row << year.sample + "-" +
         month.sample.rjust(2, '0') + "-" +
@@ -92,7 +95,7 @@ for i in 1..num_rows
         hour.sample.rjust(2, '0') + ":" +
         minute.sample.rjust(2, '0') + ":" +
         second.sample.rjust(2, '0') + "-" +
-        hour.sample.rjust(2, '0') + ":" +
+        utcHour.sample.rjust(2, '0') + ":" +
         minute.sample.rjust(2, '0')
     elsif type == "special"
       row << "\"" + special.sample(rand(30)+oset).join + "\""
