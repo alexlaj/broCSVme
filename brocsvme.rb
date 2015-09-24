@@ -79,7 +79,7 @@ for i in 1..num_rows
       when "special"
         row << data.special
       when "trend"
-        row << data.trend(i)
+        row << data.trend
       when "index"
         row << i.to_s
     end

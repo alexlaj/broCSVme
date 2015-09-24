@@ -54,7 +54,7 @@ class FakeData
     "\"" + @special.sample(rand(30) + @oset).join + "\""
   end
 
-  def trend(i)
+  def trend
     @trend_data.next
   end
 end
