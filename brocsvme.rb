@@ -2,13 +2,14 @@
 # > make string of desired data type
 # > shuffle the string to randomize it
 # > chop up the string so it is the desired length of data
-
+require './fake_data'
+require './random_sine_wave'
 require "optparse"
 
 row = []
 csv_array = []
 col_types = []
-data_types = ["special", "alphanumeric", "numeric", "float", "datetime", "time"]
+data_types = ["special", "alphanumeric", "numeric", "float", "datetime", "time", "trend"]
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -43,25 +44,14 @@ num_rows = options[:rows]
 num_rows ||= 20
 num_cols = options[:columns]
 num_cols ||= data_types.length
-
-# oset = options[:baddaata] ? 1 : 0 # Offset for sample(rand()) calls, let 0 be valid for bad data.
-oset = if options[:baddata] then 0 else 1 end
-alphanumeric = [*'a'..'z', *'0'..'9']
-numeric = [*'0'..'9']
-special = [".", "<", ">", "/", "\\", "?", ";", "&", "%", "$", "@", "`", "(", ")", "*"]
-month = options[:baddaata] ? [*'0'..'30'] : [*'1'..'12']
-day = options[:baddata] ? [*'0'..'50'] : [*'1'..'28']
-year = options[:baddata] ? [*'1000'..'3000'] : [*'1980'..'2020']
-hour = options[:baddata] ? [*'0'..'50'] : [*'0'..'23']
-utcHour = options[:baddata] ? [*'0'..'50'] : [*'0'..'11']
-minute = options[:baddata] ? [*'0'..'100'] : [*'0'..'59']
-second = minute
+data = FakeData.new(options[:baddata], num_rows)
 
 # Shuffle the column types
 for i in 0..(num_cols-1)
   col_types << data_types[i%data_types.length]
 end
 col_types = col_types.shuffle
+col_types << "index"
 
 # Use the data type as the column headers
 csv << col_types.join(",") + "\n"
@@ -73,32 +63,25 @@ for i in 1..num_rows
 
   for type in col_types
     # Make a shuffled string of the desired data
-    if type == "alphanumeric"
-      row << alphanumeric.sample(rand(30)+oset).join
-    elsif type == "numeric"
-      row << numeric.sample(rand(26)+oset).join
-    elsif type == "float"
-      row << numeric.sample(rand(10)+oset).join +
-        "." + numeric.sample(rand(6)+oset).join
-    elsif type == "date"
-      row << month.sample + "-" + day.sample + "-" + year.sample
-    elsif type == "time"
-      row << hour.sample.rjust(2, '0') + ":" +
-        minute.sample.rjust(2, '0') + ":" +
-        second.sample.rjust(2, '0') + "-" +
-        utcHour.sample.rjust(2, '0') + ":" +
-        minute.sample.rjust(2, '0')
-    elsif type == "datetime"
-      row << year.sample + "-" +
-        month.sample.rjust(2, '0') + "-" +
-        day.sample.rjust(2, '0') + "T" +
-        hour.sample.rjust(2, '0') + ":" +
-        minute.sample.rjust(2, '0') + ":" +
-        second.sample.rjust(2, '0') + "-" +
-        utcHour.sample.rjust(2, '0') + ":" +
-        minute.sample.rjust(2, '0')
-    elsif type == "special"
-      row << "\"" + special.sample(rand(30)+oset).join + "\""
+    case type
+      when "alphanumeric"
+        row << data.alphanumeric
+      when "numeric"
+        row << data.numeric
+      when "float"
+        row << data.float
+      when "date"
+        row << data.date
+      when "time"
+        row << data.time
+      when "datetime"
+        row << data.datetime
+      when "special"
+        row << data.special
+      when "trend"
+        row << data.trend(i)
+      when "index"
+        row << i.to_s
     end
   end
 
