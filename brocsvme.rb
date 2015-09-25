@@ -9,7 +9,7 @@ require "optparse"
 row = []
 csv_array = []
 col_types = []
-data_types = ["special", "alphanumeric", "numeric", "float", "datetime", "time", "trend"]
+data_types = ["special", "alphanumeric", "numeric", "float", "datetime", "time", "trend", "unicode"]
 
 options = {}
 optparse = OptionParser.new do |opts|
@@ -82,6 +82,9 @@ for i in 1..num_rows
         row << data.trend
       when "index"
         row << i.to_s
+      when "unicode"
+        row << data.unicode_string
+        #puts data.unicode_string
     end
   end
 
