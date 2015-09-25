@@ -66,13 +66,13 @@ class FakeData
   def unicode_string
     a = rand(8)
     u_str = ""
-    8.times do
+    a.times do
       u_str += unicode_character
     end
-    u_str
+    "\"" + u_str + "\""
   end
 
   def email
-    alphanumeric + "@example.com"
+    "\"" + alphanumeric + "@example.com" + "\""
   end
 end
