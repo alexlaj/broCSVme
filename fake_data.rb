@@ -1,8 +1,8 @@
 class FakeData
   def initialize(bdata, num_rows)
     @oset = if bdata then 0 else 1 end
-    @alphanumeric = [*'a'..'z', *'0'..'9']
-    @numeric = [*'0'..'9']
+    @alphanum = [*'a'..'z', *'0'..'9']
+    @num = [*'0'..'9']
     @special = [".", "<", ">", "/", "\\", "?", ";", "&", "%", "$", "@", "`", "(", ")", "*", ","]
     @month = bdata ? [*'0'..'30'] : [*'1'..'12']
     @day = bdata ? [*'0'..'50'] : [*'1'..'28']
@@ -15,16 +15,16 @@ class FakeData
   end
 
   def alphanumeric
-    @alphanumeric.sample(rand(30) + @oset).join
+    @alphanum.sample(rand(30) + @oset).join
   end
 
   def numeric
-    @numeric.sample(rand(26) + @oset).join
+    @num.sample(rand(26) + @oset).join
   end
 
   def float
-    @numeric.sample(rand(10) + @oset).join +
-    "." + @numeric.sample(rand(6) + @oset).join
+    @num.sample(rand(10) + @oset).join +
+    "." + @num.sample(rand(6) + @oset).join
   end
 
   def date
@@ -70,5 +70,9 @@ class FakeData
       u_str += unicode_character
     end
     u_str
+  end
+
+  def email
+    alphanumeric + "@example.com"
   end
 end
