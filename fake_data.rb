@@ -13,6 +13,7 @@ class FakeData
     @second = @minute
     @sine_data = RandomSineWave.new(num_rows, [*0..9].sample.to_f/10, [*1..5].sample)
     @linear_trend_data = LinearTrend.new(num_rows, [*-10..10].sample, rand(5))
+    @one_hump_data = OneHumpTrend.new([*0..9].sample.to_f/10, rand(10), num_rows)
   end
 
   def alphanumeric
@@ -61,6 +62,10 @@ class FakeData
 
   def linear_trend
     @linear_trend_data.next
+  end
+
+  def one_hump_trend
+    @one_hump_data.next
   end
 
   def unicode_character

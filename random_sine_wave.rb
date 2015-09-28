@@ -38,3 +38,18 @@ class LinearTrend
     next_step
   end
 end
+
+class OneHumpTrend
+  def initialize(variance = 0.2, y_int = 0, size)
+    @position = 0
+    @size = size
+    @y_int = y_int
+    @variance = variance
+  end
+
+  def next
+    next_step = @position * @position + @y_int + @variance * @position * (rand(@position) - rand(@position))
+    @position = @position + 1
+    next_step
+  end
+end
