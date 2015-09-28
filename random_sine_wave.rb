@@ -1,4 +1,4 @@
-# This class is from the stack overflow question
+# The RandomSineWave class is from the stack overflow question
 # http://stackoverflow.com/questions/28457047/how-can-i-generate-random-numbers-whose-average-follows-a-sine-wave-in-ruby
 # answered by user maerics
 
@@ -19,5 +19,22 @@ class RandomSineWave
     next_rand = ( ( Math.sin(@position) + (rand * @variance) - (@variance / 2) ) * @scale ).round(@sigfigs)
     @position += @step
     next_rand
+  end
+end
+
+class LinearTrend
+  def initialize(y_int = 0, slope = 5, variance = 2)
+    @slope = slope
+    @position = 0
+    @y_int = y_int
+    @variance = variance
+    @scale = [1, 100, 1000, 10000].sample
+    @sigfigs = rand(8)
+  end
+
+  def next
+    next_step = ( @slope * @position + @y_int + [*-10..10].sample * @variance ) * @scale
+    @position = @position + 1
+    next_step
   end
 end

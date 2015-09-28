@@ -11,7 +11,8 @@ class FakeData
     @utcHour = bdata ? [*'0'..'50'] : [*'0'..'11']
     @minute = bdata ? [*'0'..'100'] : [*'0'..'59']
     @second = @minute
-    @trend_data = RandomSineWave.new(num_rows, [*0..9].sample.to_f/10, [*1..5].sample)
+    @sine_data = RandomSineWave.new(num_rows, [*0..9].sample.to_f/10, [*1..5].sample)
+    @linear_trend_data = LinearTrend.new(num_rows, [*-10..10].sample, rand(5))
   end
 
   def alphanumeric
@@ -54,8 +55,12 @@ class FakeData
     "\"" + @special.sample(rand(30) + @oset).join + "\""
   end
 
-  def trend
-    @trend_data.next
+  def sine_trend
+    @sine_data.next
+  end
+
+  def linear_trend
+    @linear_trend_data.next
   end
 
   def unicode_character
