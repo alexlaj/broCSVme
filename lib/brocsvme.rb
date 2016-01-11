@@ -2,7 +2,7 @@
 # > make string of desired data type
 # > shuffle the string to randomize it
 # > chop up the string so it is the desired length of data
-require './support/fake_data'
+require './lib/support/fake_data'
 require "optparse"
 
 row = []

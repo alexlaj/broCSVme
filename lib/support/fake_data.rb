@@ -1,4 +1,4 @@
-require './support/numeric_trends'
+require './lib/support/numeric_trends'
 
 class FakeData
   def initialize(valid_data: true, num_rows: 20)
