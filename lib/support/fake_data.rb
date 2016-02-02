@@ -16,6 +16,7 @@ class FakeData
     @sine_data = SineWaveTrend.new(size: num_rows, variance: 0.2, period: [*1..5].sample)
     @linear_trend_data = LinearTrend.new(size: num_rows, variance: 0.2, y_int: [*-10..10].sample, slope: rand(num_rows))
     @one_hump_data = OneHumpTrend.new(size: num_rows, variance: 0.2, x_int: rand(num_rows), y_int: rand(num_rows))
+    @boolean = ["True", "False", "Yes", "No"]
   end
 
   def alphanumeric
@@ -32,7 +33,7 @@ class FakeData
   end
 
   def date
-    @year.sample + "-" + @month.sample + "-" + @day.sample
+    @year.sample + "-" + @month.sample.rjust(2, '0') + "-" + @day.sample.rjust(2, '0')
   end
 
   def time
@@ -42,8 +43,8 @@ class FakeData
   end
 
   def datetime
-    date + time + "-" +
-    @utcHour.sample.rjust(2, '0') + ":" +
+    date + ' ' + time + '-' +
+    @utcHour.sample.rjust(2, '0') + ':' +
     @minute.sample.rjust(2, '0')
   end
 
@@ -77,5 +78,9 @@ class FakeData
 
   def email
     alphanumeric + "@example.com"
+  end
+
+  def boolean
+    @boolean.sample
   end
 end

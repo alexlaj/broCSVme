@@ -6,7 +6,6 @@ require './lib/support/fake_data'
 require "optparse"
 
 row = []
-csv_array = []
 col_types = []
 data_types = ["special", "numeric", "datetime", "date", "time", "float", "sine_trend", "linear_trend", "one_hump_trend", "unicode", "email", "alphanumeric"]
 
